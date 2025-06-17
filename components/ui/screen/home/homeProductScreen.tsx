@@ -1,9 +1,52 @@
-import{View,Text,StyleSheet}from 'react-native';
+import { useState } from 'react';
+import {View,Text,StyleSheet, ScrollView}from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
+import DisplayTypeWidget from '../share/DisplayTypeWidget';
+import ProductGridViewWidget from './widget/ProductGridViewWidget';
+import ProductListViewWidget from './widget/ProductListViewWidget';
+
 
 export default function homeProductScreen(){
+const [searchQuery,setSearchQuery]= useState('');
+const [isGridEnabled,setIsGridEnabled]=useState(true);
+const manageGridView=({state}:any)=>{
+      setIsGridEnabled(state);
+      console.log('clicked');
+};
+
     return(
         <View style={styles.container}>
-            <Text>Home Product Screen</Text>
+       
+   <Searchbar
+      placeholder="Search Product"
+      onChangeText={setSearchQuery}
+      value={searchQuery}
+    />
+    <DisplayTypeWidget callback={(state:boolean)=>setIsGridEnabled(state)}/>
+
+
+{isGridEnabled?(
+    <ScrollView
+    showsVerticalScrollIndicator={false}>
+     <ProductGridViewWidget/>
+    <ProductGridViewWidget/>
+    <ProductGridViewWidget/>
+    <ProductGridViewWidget/>
+    </ScrollView>)
+    :
+    <ScrollView
+    showsVerticalScrollIndicator={false}>
+     <ProductListViewWidget/>
+      <ProductListViewWidget/>
+       <ProductListViewWidget/>
+        <ProductListViewWidget/>
+    
+    </ScrollView>}
+   
+  
+    
+
         </View>
     )
 
@@ -12,7 +55,7 @@ export default function homeProductScreen(){
 const styles= StyleSheet.create({
     container:{
         flex:1,
-        alignItems:'center',
-justifyContent:'center'
+        padding:10
+     
     }
 })

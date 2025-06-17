@@ -3,10 +3,10 @@ import {Menu} from 'react-native-paper';
 import { COLORS } from '@/constants/colorpallets';
 
 
-export default function homeMenuScreen(){
+export default function homeMenuScreen({navigation}:any){
     return(
         <View style={styles.container}>
-           <Menu.Item leadingIcon="redo" onPress={() => {}} title="My order" />
+           <Menu.Item leadingIcon="redo" onPress={() => navigation.navigate('MyOrder')} title="My order" />
     <Menu.Item leadingIcon="undo" onPress={() => {}} title="settings" />
     <Menu.Item leadingIcon="content-cut" onPress={() => {}} title="Vouchers"  />
     <Menu.Item leadingIcon="content-copy" onPress={() => {}} title="Daily Deals"  />
