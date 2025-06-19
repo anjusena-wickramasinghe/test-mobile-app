@@ -7,7 +7,7 @@ import ProductGridViewWidget from './widget/ProductGridViewWidget';
 import ProductListViewWidget from './widget/ProductListViewWidget';
 
 
-export default function homeProductScreen(){
+export default function homeProductScreen({navigation}:any){
 const [searchQuery,setSearchQuery]= useState('');
 const [isGridEnabled,setIsGridEnabled]=useState(true);
 const manageGridView=({state}:any)=>{
@@ -29,7 +29,7 @@ const manageGridView=({state}:any)=>{
 {isGridEnabled?(
     <ScrollView
     showsVerticalScrollIndicator={false}>
-     <ProductGridViewWidget/>
+     <ProductGridViewWidget navigation={navigation}/>
     <ProductGridViewWidget/>
     <ProductGridViewWidget/>
     <ProductGridViewWidget/>
@@ -37,7 +37,7 @@ const manageGridView=({state}:any)=>{
     :
     <ScrollView
     showsVerticalScrollIndicator={false}>
-     <ProductListViewWidget/>
+     <ProductListViewWidget navigation={navigation}/>
       <ProductListViewWidget/>
        <ProductListViewWidget/>
         <ProductListViewWidget/>

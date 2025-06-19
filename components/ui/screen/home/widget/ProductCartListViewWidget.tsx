@@ -1,11 +1,19 @@
 import { COLORS } from '@/constants/colorpallets';
+import { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-paper';
 
-export default function ProductListViewWidget({navigation}:any) {
+export default function ProductCartListViewWidget({navigation}:any) {
+    const[qty,setQty]=useState(0);
+        const changeQty =(value:number)=>{
+            if(value <=0){
+                return;
+            }
+         setQty(value);
+        }
+    
     return (
-        <TouchableOpacity
-        onPress={()=>navigation.navigate('ProductDetails')}
+        <TouchableOpacity onPress={()=>navigation.navigate('ProductDetails')}
         style={styles.container}>
             <TouchableOpacity style={styles.bookmark}>
              <Icon size={20} source={'heart-outline'} color={COLORS.light}/>
@@ -22,7 +30,22 @@ export default function ProductListViewWidget({navigation}:any) {
 
     <Text style={styles.price}>LKR 200.00</Text>
 
-   <Text style={styles.qty}>QTY</Text>
+   <View style={styles.buttonBar}>
+   <TouchableOpacity onPress={()=>changeQty(qty-1)} style={styles.button}>
+       <Icon size={20} source={'minus'} color={COLORS.orange}/>
+       </TouchableOpacity>
+       
+   
+       <Text style={{fontWeight:'bold',marginLeft:10, marginRight:10 }}>{qty}</Text>
+   
+     <TouchableOpacity onPress={()=>changeQty(qty+1)}  style={styles.button}>
+       <Icon size={20} source={'plus'} color={COLORS.orange}/>
+       </TouchableOpacity>
+   
+   
+   
+       </View>
+   
 </View>
 
 
@@ -40,6 +63,22 @@ const styles = StyleSheet.create({
      borderRadius:5,
      flexDirection:"row",
      
+    },
+     buttonBar:{
+        marginTop:20,
+        flexDirection:'row',
+        justifyContent:'flex-end',
+        alignItems:'center',
+
+    },
+    button:{
+    width:35,
+    height:35,
+    borderRadius:1,
+    borderWidth:1,
+    alignItems:'center',
+    justifyContent:'center',
+    borderColor:COLORS.black
     },
     bookmark:{
 width:40,

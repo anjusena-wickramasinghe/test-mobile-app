@@ -3,9 +3,10 @@ export const COLORS={
     red:'green',
     blue:'blue',
     light:'#fff',
-    green:'#B6F500',
+    green:'#16C47F',
     Lgreen:'#075B5E',
     orange:'#FF7601',
+    black:'#000000'
 
 }as const;
 
