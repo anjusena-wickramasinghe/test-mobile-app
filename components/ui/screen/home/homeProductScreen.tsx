@@ -5,6 +5,7 @@ import { Searchbar } from 'react-native-paper';
 import DisplayTypeWidget from '../share/DisplayTypeWidget';
 import ProductGridViewWidget from './widget/ProductGridViewWidget';
 import ProductListViewWidget from './widget/ProductListViewWidget';
+import { navigate } from 'expo-router/build/global-state/routing';
 
 
 export default function homeProductScreen({navigation}:any){

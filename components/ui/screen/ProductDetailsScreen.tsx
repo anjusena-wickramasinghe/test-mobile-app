@@ -114,7 +114,7 @@ const styles= StyleSheet.create({
     },
 
     image:{
-height:200
+          height:200
     },
     imagebg:{
     backgroundColor:COLORS.darkGray
