@@ -12,6 +12,7 @@ export default function homeScreen(){
             {isloading?(
                 <SplaashScreen onFinish={()=>{setIsLoading(false)}}/>
                 ):(
+                    
                 <StackNavigator/>
                 )}
     

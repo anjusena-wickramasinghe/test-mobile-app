@@ -1,9 +1,12 @@
+
 import { COLORS } from '@/constants/colorpallets';
 import { View, Text, StyleSheet,Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as React from 'react';
 import { TextInput,Icon} from 'react-native-paper';
-
+import axios from 'axios';
+import getBaseUrl from '@/constants/baseURL';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const logo = require('@/assets/images/images/logo.png');
@@ -12,6 +15,40 @@ export default function LoginScreen({navigation}:any) {
     const[email, setEmail]=React.useState('');
     const[passwordDisplayState, setPasswordDisplayState]=React.useState('false');
     const[Password, setpassword]=React.useState('');
+
+React.useEffect(()=>{
+    const checkToken= async ()=>{
+        const token = await AsyncStorage.getItem('token');
+        if(token){
+            navigation.navigate('ProductUpload')
+        }
+    };
+    checkToken();
+})
+    const handleLogin = async ()=>{
+    try{
+        const response= await axios.post(`${getBaseUrl()}users/login`,{
+        username:email,
+        Password
+        
+    });
+if(response.data.token){
+    await AsyncStorage.setItem('token',response.data.token);
+    await AsyncStorage.setItem('user',JSON.stringify(response.data.user));
+       navigation.navigate('ProductUpload')
+}
+
+
+}
+    
+    catch(e){
+ console.log(e);
+    }
+
+}
+
+
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.logoWrapper}>
@@ -22,13 +59,14 @@ export default function LoginScreen({navigation}:any) {
 <View style= {styles.forGroup}>
 
 </View>
-                 <TextInput
+ <TextInput
       label="Root Email"
       mode='outlined'
       value={email}
       onChangeText={text => setEmail(text)}
     />
     <View style= {styles.forGroup}></View>
+    
 <TextInput
       label="Password"
       mode='outlined'
@@ -48,9 +86,13 @@ onPress={()=>navigation.navigate('Change Password')}
 style={styles.forgotPasswordButton}>
     <Text style={styles.forgotPasswordText}> Forgot Password ?</Text>
 </TouchableOpacity>
-<TouchableOpacity style={styles.loginButton}>
+
+<TouchableOpacity style={styles.loginButton}
+onPress={()=>handleLogin()}>
+
     <Text style={styles.loginText}> Login</Text>
 </TouchableOpacity>
+
 <Text style={styles.seperateText}>OR</Text>
 
 <View style={styles.socialLoginWraper}> 

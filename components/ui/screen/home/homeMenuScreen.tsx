@@ -1,9 +1,16 @@
 import {View,Text,StyleSheet} from 'react-native';
 import {Menu} from 'react-native-paper';
 import { COLORS } from '@/constants/colorpallets';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function homeMenuScreen({navigation}:any){
+    const logout= async()=>{
+        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('user');
+        navigation.navigate('Login')
+        
+    }
     return(
         <View style={styles.container}>
            <Menu.Item leadingIcon="redo" onPress={() => navigation.navigate('MyOrder')} title="My order" />
@@ -14,7 +21,8 @@ export default function homeMenuScreen({navigation}:any){
         <Menu.Item leadingIcon="content-paste" onPress={() => {}} title="Latest Products" />
             <Menu.Item leadingIcon="content-paste" onPress={() => {}} title="Profile" />
                 <Menu.Item leadingIcon="content-paste" onPress={() => {}} title="Customer care" />
-                    <Menu.Item leadingIcon="content-paste" onPress={() => {}} title="logout" />
+                    <Menu.Item leadingIcon="content-paste" onPress={() => {logout()}} title="logout" />
+                        
         </View>
     )
 

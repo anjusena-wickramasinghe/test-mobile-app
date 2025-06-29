@@ -3,7 +3,8 @@ import { View, Text, StyleSheet,Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as React from 'react';
 import { TextInput,Icon} from 'react-native-paper';
-
+import axios from "axios"
+import getBaseUrl from '@/constants/baseURL';
 
 
 const logo = require('@/assets/images/images/logo.png');
@@ -12,8 +13,32 @@ export default function signupScreen({navigation}:any) {
     const[email, setEmail]=React.useState('');
     const[displayName, setDisplayName]=React.useState('');
     const[passwordDisplayState, setPasswordDisplayState]=React.useState('false');
-    const[Password, setpassword]=React.useState('');
+    const[password, setpassword]=React.useState('');
    
+const handleRegistor= async ()=>{
+    try{
+        const response= await axios.post(`${getBaseUrl()}users/create-user`,{
+        username:email,
+        displayName,
+        password,
+        roles: ['ADMIN'],
+        isActive:false, 
+    });
+
+        if(response.status===201){
+       navigation.navigate('signupverifyEmail',{email})
+        }else{
+            console.log(response.data)
+        }
+    }
+    catch(e){
+ console.log(e);
+    }
+
+}
+
+
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.logoWrapper}>
@@ -35,7 +60,7 @@ export default function signupScreen({navigation}:any) {
       label="Password"
       mode='outlined'
       secureTextEntry={!passwordDisplayState}
-      value={Password}
+      value={password}
       onChangeText={text => setpassword(text)}
       right={<TextInput.Icon onPress={()=>{
         setPasswordDisplayState(passwordDisplayState)
@@ -54,14 +79,18 @@ export default function signupScreen({navigation}:any) {
 
 
 <TouchableOpacity 
-onPress={()=>navigation.navigate('signup verify')}
+onPress={()=>handleRegistor()}
 style={styles.loginButton}>
+
     <Text style={styles.loginText}>Register</Text>
+
 </TouchableOpacity>
+
+
 <Text style={styles.seperateText}>OR</Text>
         
 <TouchableOpacity 
-onPress={()=>navigation.navigate('LoginScreen')}
+onPress={()=>navigation.navigate('Login')}
 style={styles.emailButton}>
     <Text style={styles.loginText}>Already have an account?</Text>
 </TouchableOpacity>

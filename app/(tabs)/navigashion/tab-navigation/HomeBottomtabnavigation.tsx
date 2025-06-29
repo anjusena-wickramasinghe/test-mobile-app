@@ -12,7 +12,9 @@ const logo = require('@/assets/images/images/logo.png');
 
 const Tab = createBottomTabNavigator();
 
-export default function HomeBottomTabNavigation() {
+
+
+export default function HomeBottomTabNavigation({navigation}:any) {
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -43,8 +45,9 @@ export default function HomeBottomTabNavigation() {
                     />
                 ),
                 headerTitle:'',
+
               headerRight:()=>(
-                <TouchableOpacity
+                <TouchableOpacity onPress={()=>navigation.navigate('Login')}
                 style={{
                     marginRight:10,
                     width:120,
@@ -53,9 +56,8 @@ export default function HomeBottomTabNavigation() {
                     height:35,
                     alignItems:'center',
                     justifyContent:'center'
-                }}
-                
-                >
+                }}>
+
                     <Text> admin console</Text>
                 </TouchableOpacity>
               )  

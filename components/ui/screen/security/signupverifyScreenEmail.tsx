@@ -3,11 +3,76 @@ import { View, Text, StyleSheet,Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as React from 'react';
 import { TextInput} from 'react-native-paper';
+import { Route } from 'expo-router/build/Route';
+import axios from "axios"
+
+import getBaseUrl from '@/constants/baseURL';
+import { useRoute } from '@react-navigation/native';
+
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/app/(tabs)/navigashion/stack-navigation/RootStackParamList';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'signupverifyEmail'>;
 
 const logo = require('@/assets/images/images/logo.png');
 
-export default function signupverifyScreenEmail({navigation}:any) {
+export default function signupverifyScreenEmail({navigation, route}:any) {
+  
+    const {email}=route.params;
     const[otp, setOtp]=React.useState('');
+
+const handleVerifyOtp = async ()=>{
+    try{
+        
+        const response= await axios.post(`${getBaseUrl()}users/verify-otp`,
+        {
+            
+        username: email,
+        otp,
+        
+    });
+
+        if(response.status===201){
+       navigation.navigate('Login');
+        }
+        else{
+            console.log(response.data)
+        }
+    }
+    catch(e){
+ console.log("cant");
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     return (
         <ScrollView style={styles.container}>
@@ -21,7 +86,8 @@ export default function signupverifyScreenEmail({navigation}:any) {
     <View style= {styles.forGroup}>
 
 </View>
-                 <TextInput
+
+ <TextInput
       label="OTP"
       mode='outlined'
       value={otp}
@@ -33,13 +99,17 @@ export default function signupverifyScreenEmail({navigation}:any) {
 <TouchableOpacity
 onPress={()=>navigation.navigate('signup')}
 style={styles.forgotPasswordButton}>
-    <Text style={styles.forgotPasswordText}>Change Email</Text>
+    <Text style={styles.forgotPasswordText}>Change Email :{email}</Text>
 </TouchableOpacity>
+
 <TouchableOpacity style={styles.forgotPasswordButton}>
     <Text style={styles.forgotPasswordText}>(30) Resend Email</Text>
 </TouchableOpacity>
+
+{/* loging btn */}
+
 <TouchableOpacity 
-onPress={()=>navigation.navigate('process')}
+onPress={()=>handleVerifyOtp()}
 style={styles.loginButton}>
     <Text style={styles.loginText}>verify</Text>
 </TouchableOpacity>
@@ -146,4 +216,6 @@ padding:10,
         
         
     }
+
+    
 });

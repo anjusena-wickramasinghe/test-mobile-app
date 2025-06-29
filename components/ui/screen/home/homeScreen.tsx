@@ -1,21 +1,4 @@
-// import{View,Text,StyleSheet}from 'react-native';
 
-// export default function homeScreen(){
-//     return(
-//         <View style={styles.container}>
-//             <Text>Home page  k Screen</Text>
-//         </View>
-//     )
-
-// }
-
-// const styles= StyleSheet.create({
-//     container:{
-//         flex:1,
-//         alignItems:'center',
-// justifyContent:'center'
-//     }
-// })
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Linking, Dimensions } from 'react-native';
 import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -350,7 +333,7 @@ const HomeScreen = ({ navigation }: any) => {
       {/* Call to Action */}
       <TouchableOpacity 
         style={styles.ctaButton}
-        onPress={() => navigation.navigate('SignUp')}
+        onPress={() => navigation.navigate('Login')}
       >
         <Text style={styles.ctaText}>Join OrganicConnect Today</Text>
       </TouchableOpacity>
